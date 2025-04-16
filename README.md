@@ -32,5 +32,5 @@ In order to isolate the domain name, I utilized the ```urlparse(url)``` function
 
 Each endpoint in the config file has certain fields specfied (name, body, method, etc). If the method field is not specficed, then it defaults to **GET**. In addition, the body field's value is a string, but the request function expects a json value. To fix this, the string is converted into a ditionary if the value is not null.
 
-The script is expected to determine availability based on two conditions, if the response status is within the 200 to 299 range and the response time is at most 15ms. the starter code accounted for the first condition but not the second. To fix this, the time was taken before and after the request was made and both conditions where checked.
+The script is expected to determine availability based on two conditions, if the response status is within the 200 to 299 range and the response time is at most 500ms. the starter code accounted for the first condition but not the second. To fix this, the time was taken before and after the request was made and both conditions where checked.
 
