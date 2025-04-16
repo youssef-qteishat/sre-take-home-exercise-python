@@ -20,7 +20,7 @@ python main.py <config_file_path>
 
 Afterwards, the cumulative availability of all endpoints will be evaluated and logged in terminal every 15 seconds. And to stop the script, type **Ctrl+C**. Feel free to change the ```config.yaml``` file to your liking as well, just make sure to follow the same configuration as the ```sample.yaml```.
 
-## Changes
+## Changes Made
 
 ### monitor_endpoints(file_path):
 
