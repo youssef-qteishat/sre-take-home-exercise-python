@@ -10,7 +10,8 @@ def load_config(file_path):
     with open(file_path, 'r') as file:
         return yaml.safe_load(file)
 
-# ignores port when returning domain
+# helper function for monitor_endpoints()
+# ignores port number when returning domain
 def get_domain(url):
     parsed_url = urlparse(url)
     return parsed_url.hostname
@@ -18,10 +19,10 @@ def get_domain(url):
 # Function to perform health checks
 def check_health(endpoint):
     url = endpoint['url']
-    method = endpoint.get('method', 'GET').upper() # reformat HTTP method to uppercase and defaults to GET if no method provided
+    method = endpoint.get('method', 'GET') # defaults to GET if no method provided
     headers = endpoint.get('headers')
-    body = endpoint.get('body')
     name = endpoint.get('name')
+    body = endpoint.get('body')
 
     # if body is specified, convert string to dictionary
     if body is not None:
@@ -35,7 +36,7 @@ def check_health(endpoint):
         elapsed_time = (time.time() - start_time) * 1000
 
         #check evailability based on reponse status and reponse time
-        if (200 <= response.status_code < 300) and (elapsed_time) <= 500:
+        if (200 <= response.status_code < 300) and (elapsed_time <= 500):
             return "UP"
         else:
             return "DOWN"
@@ -49,7 +50,7 @@ def monitor_endpoints(file_path):
 
     while True:
         for endpoint in config:
-            domain = get_domain(endpoint["url"])
+            domain = get_domain(endpoint["url"]) # call helper function to return domain, excluding the port number
             result = check_health(endpoint)
 
             domain_stats[domain]["total"] += 1
@@ -70,7 +71,7 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) != 2:
-        print("Usage: python monitor.py <config_file_path>")
+        print("Usage: python main.py <config_file_path>")
         sys.exit(1)
 
     config_file = sys.argv[1]
